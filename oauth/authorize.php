@@ -54,7 +54,7 @@ if (empty($_POST)) {
 
           <tr>
             <td align="center">
-              <div class="LoginTitle">Mattermost desires access to your LDAP data:</div>
+              <div class="LoginTitle">Mattermost requires access to your user data:</div>
         
 
             <form method="post">

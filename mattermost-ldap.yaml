@@ -1,0 +1,114 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mattermost-ldap
+spec:  
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: mattermost-ldap
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mattermost-ldap
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mattermost-ldap
+  template:
+    metadata:
+      labels:
+        app: mattermost-ldap
+    spec:
+      containers:
+      - name: mattermost-ldap
+        image: davebown/mattermost-ldap:0.1
+        env:
+          - name: DB_HOST
+            valueFrom:
+                configMapKeyRef:
+                  name: mattermost-ldap
+                  key: db_host  
+          - name: DB_PORT
+            valueFrom:
+                configMapKeyRef:
+                  name: mattermost-ldap
+                  key: db_port       
+          - name: DB_NAME
+            valueFrom:
+                configMapKeyRef:
+                  name: mattermost-ldap
+                  key: db_name
+          - name: DB_USER
+            valueFrom:
+                secretKeyRef:
+                  name: mattermost-ldap
+                  key: db_user
+          - name: DB_PASS
+            valueFrom:
+                secretKeyRef:
+                  name: mattermost-ldap
+                  key: db_pass
+          - name: LDAP_HOST
+            valueFrom:
+                configMapKeyRef:
+                  name: mattermost-ldap
+                  key: ldap_host
+          - name: LDAP_PORT
+            valueFrom:
+                configMapKeyRef:
+                  name: mattermost-ldap
+                  key: ldap_port
+          - name: LDAP_BASE_DN
+            valueFrom:
+                configMapKeyRef:
+                  name: mattermost-ldap
+                  key: ldap_base_dn
+          - name: LDAP_FILTER
+            valueFrom:
+                configMapKeyRef:
+                  name: mattermost-ldap
+                  key: ldap_filter
+          - name: LDAP_BIND_DN
+            valueFrom:
+                secretKeyRef:
+                  name: mattermost-ldap
+                  key: ldap_bind_dn
+          - name: LDAP_PASS
+            valueFrom:
+                secretKeyRef:
+                  name: mattermost-ldap
+                  key: ldap_pass
+          - name: LDAP_MAIL_ATTR
+            valueFrom:
+                configMapKeyRef:
+                  name: mattermost-ldap
+                  key: ldap_mail_attr
+          - name: LDAP_NAME_ATTR
+            valueFrom:
+                configMapKeyRef:
+                  name: mattermost-ldap
+                  key: ldap_name_attr
+          - name: LDAP_USERNAME_ATTR
+            valueFrom:
+                configMapKeyRef:
+                  name: mattermost-ldap
+                  key: ldap_username_attr
+          - name: LDAP_SEARCH_ATTR
+            valueFrom:
+                configMapKeyRef:
+                  name: mattermost-ldap
+                  key: ldap_search_attr              
+        ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            port: http
+            path: /

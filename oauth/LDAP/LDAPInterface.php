@@ -41,10 +41,12 @@ interface LDAPInterface
      * @param string @search_attribute
      * The attribute used on your LDAP to identify user (uid, email, cn, sAMAccountName)
      * @param string @user
-     * A ldap username or email or sAMAccountName  
+     * A ldap username or email or sAMAccountName
+     * @param array @attributes
+     * LDAP attribute names used for getting user data  
      * 
      * @return 
      * An array with the user's mail, complete name and directory name.
      */
-    public function getDataForMattermost($base_dn, $filter, $bind_dn, $bind_pass, $search_attribute, $user);
+    public function getDataForMattermost($base_dn, $filter, $bind_dn, $bind_pass, $search_attribute, $user, $attributes);
 }
