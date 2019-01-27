@@ -9,6 +9,7 @@ ENV DB_PORT  5432
 ENV DB_NAME  oauth_db
 ENV DB_USER  oauth
 ENV DB_PASS  oauth_secure-pass
+ENV DB_TYPE  pgsql
 
 ENV LDAP_HOST    ldap.companyname.net
 ENV LDAP_PORT    389

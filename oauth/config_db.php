@@ -3,7 +3,7 @@
 $port  	  = intval(getenv('DB_PORT'));
 $host  	  = getenv('DB_HOST');
 $name  	  = getenv('DB_NAME');
-$type	  = "pgsql";
+$type	  = getenv('DB_TYPE');
 $username = getenv('DB_USER');
 $password = getenv('DB_PASS');
 $dsn	  = $type . ":dbname=" . $name . ";host=" . $host . ";port=" . $port; 

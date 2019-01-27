@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: mattermost-ldap
-        image: davebown/mattermost-ldap:0.1
+        image: davebown/mattermost-ldap:0.2
         env:
           - name: DB_HOST
             valueFrom:
