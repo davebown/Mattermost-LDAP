@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: mattermost-ldap-ingress
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    certmanager.k8s.io/cluster-issuer: "letsencrypt-prod"
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+    contour.heptio.com/request-timeout: infinity
+spec:
+  tls:
+  - secretName: mattermost-ldap-tls
+    hosts: 
+    - mattermost-auth.org.com
+  rules:
+  - host: mattermost-auth.org.com
+    http:
+      paths:
+      - backend:
+          serviceName: mattermost-ldap
+          servicePort: 80

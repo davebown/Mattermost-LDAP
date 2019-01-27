@@ -227,7 +227,8 @@ class LDAP implements LDAPInterface
         	throw new Exception('An error has occured during ldap_first_entry execution. Please check parameter of LDAP/getData.');
         }
 
-        $dn = ldap_get_values($this->ldap_server, $data, 'dn');
+        $dn = ldap_get_dn($this->ldap_server, $data);
+
         if(!$dn)
         {
             throw new Exception('An error has occured during ldap_get_values execution dn. Please check parameter of LDAP/getData.');
@@ -251,7 +252,7 @@ class LDAP implements LDAPInterface
             throw new Exception('An error has occured during ldap_get_values execution ('.$attributes['username'].'). Please check parameter of LDAP/getData.');
         }
 
-        return array("dn" => $dn[0], "mail" => $mail[0], "name" => $name[0], "username" => $username[0]);
+        return array("dn" => $dn, "mail" => $mail[0], "name" => $name[0], "username" => $username[0]);
     }
 
     /*

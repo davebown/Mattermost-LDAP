@@ -111,4 +111,4 @@ spec:
         readinessProbe:
           httpGet:
             port: http
-            path: /
+            path: /oauth/index.php
